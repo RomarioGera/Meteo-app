@@ -16,10 +16,9 @@ class App extends React.Component {
     pressure: undefined,
     wind: undefined,
     humidity: undefined,
-    error: undefined
   };
 
-  gettingWeather = async e => {
+   gettingWeather = async e => {
     e.preventDefault();
     const city = e.target.elements.city.value;
 
@@ -35,7 +34,8 @@ class App extends React.Component {
         temp: data.main.temp,
         pressure: pressure,
         wind: data.wind.speed,
-        humidity: data.main.humidity
+        humidity: data.main.humidity,
+
       });
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -56,14 +56,15 @@ class App extends React.Component {
         };
 
         const weatherByDefault = getWeather();
-
+        let pressure = (weatherByDefault.main.pressure * 0.750062).toFixed();
         this.setState({
           city: weatherByDefault.name,
           country: weatherByDefault.sys.country,
           temp: weatherByDefault.main.temp,
-          pressure: weatherByDefault.main.pressure,
+          pressure: pressure,
           wind: weatherByDefault.wind.speed,
-          humidity: weatherByDefault.main.humidity
+          humidity: weatherByDefault.main.humidity,
+
         });
       });
     } else {
